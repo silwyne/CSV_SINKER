@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * The Main Class Calls from Other Classes to handle the process
+ * This is the Main Class of this project
+ *
+ * @author seyed mohamad hasan tabatabaei asl
+ */
 public class Main {
 
     private static final Logger LOGGER = MyLogManager.getLogger("Main");
