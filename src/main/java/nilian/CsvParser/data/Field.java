@@ -1,6 +1,6 @@
-package nilian.data;
+package nilian.CsvParser.data;
 
-import nilian.Tuple.JavaType;
+import nilian.CsvParser.Tuple.JavaType;
 
 public class Field {
     private final JavaType javaType;

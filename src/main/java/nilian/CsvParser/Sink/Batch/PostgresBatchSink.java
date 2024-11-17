@@ -1,7 +1,6 @@
-package nilian.Sink.Batch;
+package nilian.CsvParser.Sink.Batch;
 
-import nilian.Sink.JdbcStatement;
-import nilian.Tuple.Tuple13;
+import nilian.CsvParser.Sink.JdbcStatement;
 
 import java.sql.*;
 

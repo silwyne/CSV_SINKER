@@ -1,4 +1,4 @@
-package nilian.Sink;
+package nilian.CsvParser.Sink;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

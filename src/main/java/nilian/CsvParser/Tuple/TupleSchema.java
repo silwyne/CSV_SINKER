@@ -1,4 +1,4 @@
-package nilian.Tuple;
+package nilian.CsvParser.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;

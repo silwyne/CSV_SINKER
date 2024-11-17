@@ -1,4 +1,4 @@
-package nilian.Sink.Batch;
+package nilian.CsvParser.Sink.Batch;
 public class ConsoleBatchSink<T> implements SinkBatchFunction<T> {
     @Override
     public void sinkData(T data) {

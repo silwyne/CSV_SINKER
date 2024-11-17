@@ -1,4 +1,4 @@
-package nilian.Tuple;
+package nilian.CsvParser.Tuple;
 
 public enum JavaType {
     String,

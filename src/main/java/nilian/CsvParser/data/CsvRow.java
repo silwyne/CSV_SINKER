@@ -1,6 +1,6 @@
-package nilian.data;
+package nilian.CsvParser.data;
 
-import nilian.Tuple.TupleSchema;
+import nilian.CsvParser.Tuple.TupleSchema;
 
 import java.util.ArrayList;
 import java.util.List;

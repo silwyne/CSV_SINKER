@@ -1,17 +1,15 @@
 package nilian;
 
+import nilian.CsvParser.Sink.JdbcMaker;
+import nilian.HO.EnvLoader;
 import nilian.Reader.FileReader;
 import nilian.RunTimeLog.MyLogManager;
-import nilian.Sink.Batch.PostgresBatchSink;
-import nilian.Sink.JdbcStatement;
-import nilian.Tuple.JavaType;
-import nilian.Tuple.TupleSchema;
-import nilian.data.CsvRow;
-import nilian.data.Field;
+import nilian.CsvParser.Sink.Batch.PostgresBatchSink;
+import nilian.CsvParser.Sink.JdbcStatement;
+import nilian.CsvParser.Tuple.TupleSchema;
+import nilian.CsvParser.data.CsvRow;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -21,6 +19,7 @@ public class Main {
 
     private static final Logger LOGGER = MyLogManager.getLogger("Main");
     private static TupleSchema csvColumnTypes;
+    private static int writtenRows = 0 ;
 
     public static void main(String[] args) throws SQLException {
 
@@ -85,50 +84,7 @@ public class Main {
         }
 
         LOGGER.info("MAKING JdbcStatement");
-        JdbcStatement<CsvRow> jdbcStatement = new JdbcStatement<CsvRow>() {
-            @Override
-            public void setSen(PreparedStatement preparedStatement, CsvRow data) throws SQLException {
-                int size = data.getFields().size();
-                List<Field> fields = data.getFields();
-
-                for(int i = 0 ; i < size; i++){
-                    // getting the prepared position
-                    int position = i + 1;
-
-                    // if string
-                    if(fields.get(i).getJavaType().equals(JavaType.String)) {
-                        if(fields.get(i).getData().isEmpty()) {
-                            preparedStatement.setNull(position, Types.VARCHAR);
-                        }
-                        preparedStatement.setString(position, fields.get(i).getData());
-                    }
-
-                    // if integer
-                    if(fields.get(i).getJavaType().equals(JavaType.Integer)) {
-                        if(fields.get(i).getData().isEmpty()) {
-                            preparedStatement.setNull(position, Types.INTEGER);
-                        }
-                        preparedStatement.setInt(position, (int) fields.get(i).getParsedData());
-                    }
-
-                    // if long
-                    if(fields.get(i).getJavaType().equals(JavaType.Long)) {
-                        if(fields.get(i).getData().isEmpty()) {
-                            preparedStatement.setNull(position, Types.BIGINT);
-                        }
-                        preparedStatement.setLong(position, (long) fields.get(i).getParsedData());
-                    }
-
-                    // if Double
-                    if(fields.get(i).getJavaType().equals(JavaType.Long)) {
-                        if(fields.get(i).getData().isEmpty()) {
-                            preparedStatement.setNull(position, Types.DOUBLE);
-                        }
-                        preparedStatement.setDouble(position, (double) fields.get(i).getParsedData());
-                    }
-                }
-            }
-        };
+        JdbcStatement<CsvRow> jdbcStatement = JdbcMaker.getStatement();
 
         /*
         Getting Sinker Object
@@ -142,9 +98,23 @@ public class Main {
                 jdbcStatement
         );
 
-        LOGGER.info("SINKING OK CSV ROWS IN POSTGRES");
+        /*
+        Sinking Operation
+         */
+        LOGGER.info("SINKING OK CSV ROWS IN POSTGRES ...");
         for(CsvRow csvRow: parsedCsv) {
             sinker.sinkData(csvRow);
+            writtenRows ++ ;
+        }
+        LOGGER.finest("Done!");
+        LOGGER.finest(writtenRows+" sinked into Table");
+
+        if(!badCsv.isEmpty()) {
+            LOGGER.warning("You have some csv lines didn't sinked into Postgres table!");
+            LOGGER.warning("Here they are");
+            for(String badLine: badCsv) {
+                LOGGER.warning(badLine);
+            }
         }
     }
 }
