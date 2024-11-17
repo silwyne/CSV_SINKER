@@ -33,3 +33,8 @@ Imagine you have a CSV file and need its data in your database table. Manually c
 
 1. **Configure the Environment**:
    Create an `env.csv_sinker` file in your working directory with the following structure:
+2. **Run the script**:
+   run the script using this command: \
+```shell
+java -jar /path/to/CSV_SINKER.jar
+```
