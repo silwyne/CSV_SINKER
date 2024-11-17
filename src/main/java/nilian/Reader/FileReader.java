@@ -13,14 +13,8 @@ public class FileReader {
         try {
             File myObj = new File(path);
             Scanner myReader = new Scanner(myObj);
-            int i = 0 ;
             while (myReader.hasNextLine()) {
-                i++;
-                if(i == 1 ){
-                    myReader.nextLine();
-                } else {
                     data.add(myReader.nextLine());
-                }
             }
             myReader.close();
         } catch (FileNotFoundException e) {
