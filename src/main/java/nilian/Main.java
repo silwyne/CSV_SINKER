@@ -80,15 +80,19 @@ public class Main {
         LOGGER.info("PARSING STRINGS INTO TUPLES");
         List<CsvRow> parsedCsv = new ArrayList<>();
         List<String> badCsv = new ArrayList<>();
+        int expectedCommas = csvColumnTypes.getJavaTypes().size() - 1;
 
-        for(String rawString: rawStringFile) {
-            String[] stringFields = rawString.split(",");
-            if(stringFields.length == csvColumnTypes.getJavaTypes().size()) {
+        for(int i = 0; i < rawStringFile.size(); i++) {
+            String rawString = rawStringFile.get(i);
+            if (rawString.chars().filter(c -> c == ',').count() == expectedCommas) {
+                String[] stringFields = rawString.split(",");
                 parsedCsv.add(new CsvRow(csvColumnTypes, stringFields));
             } else {
                 badCsv.add(rawString);
             }
         }
+        LOGGER.info("Parsed "+parsedCsv.size()+" rows successfully. "+badCsv.size()+" rows were invalid.");
+
 
         LOGGER.info("MAKING JdbcStatement");
         JdbcStatement<CsvRow> jdbcStatement = JdbcMaker.getStatement();
@@ -114,8 +118,6 @@ public class Main {
             writtenRows ++ ;
         }
         LOGGER.finest("Done!");
-        LOGGER.finest(writtenRows+" sinked into Table");
-        LOGGER.warning(badCsv.size()+" bad csv rows");
 
         if(!badCsv.isEmpty()) {
             LOGGER.warning("You have some csv lines didn't sinked into Postgres table!");
