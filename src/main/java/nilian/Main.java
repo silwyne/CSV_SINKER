@@ -1,6 +1,8 @@
 package nilian;
 
+import nilian.CsvParser.Parser;
 import nilian.CsvParser.Sink.JdbcMaker;
+import nilian.CsvParser.Tuple.Tuple2;
 import nilian.HO.EnvLoader;
 import nilian.Reader.FileReader;
 import nilian.RunTimeLog.MyLogManager;
@@ -8,6 +10,7 @@ import nilian.CsvParser.Sink.Batch.PostgresBatchSink;
 import nilian.CsvParser.Sink.JdbcStatement;
 import nilian.CsvParser.Tuple.TupleSchema;
 import nilian.CsvParser.data.CsvRow;
+import org.postgresql.core.Tuple;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,8 +27,7 @@ import java.util.logging.Logger;
 public class Main {
 
     private static final Logger LOGGER = MyLogManager.getLogger("Main");
-    private static TupleSchema csvColumnTypes;
-    private static int writtenRows = 0 ;
+    public static TupleSchema csvColumnTypes;
     public static String TIMESTAMP_PATTERN;
     public static void main(String[] args) throws SQLException {
 
@@ -78,19 +80,9 @@ public class Main {
         Casting Raw String into Csv Data
          */
         LOGGER.info("PARSING STRINGS INTO TUPLES");
-        List<CsvRow> parsedCsv = new ArrayList<>();
-        List<String> badCsv = new ArrayList<>();
-        int expectedCommas = csvColumnTypes.getJavaTypes().size() - 1;
-
-        for(int i = 0; i < rawStringFile.size(); i++) {
-            String rawString = rawStringFile.get(i);
-            if (rawString.chars().filter(c -> c == ',').count() == expectedCommas) {
-                String[] stringFields = rawString.split(",");
-                parsedCsv.add(new CsvRow(csvColumnTypes, stringFields));
-            } else {
-                badCsv.add(rawString);
-            }
-        }
+        Tuple2<List<CsvRow>, List<String>> files = Parser.parse(rawStringFile);
+        List<CsvRow> parsedCsv = files._1;
+        List<String> badCsv = files._2;
         LOGGER.info("Parsed "+parsedCsv.size()+" rows successfully. "+badCsv.size()+" rows were invalid.");
 
 
