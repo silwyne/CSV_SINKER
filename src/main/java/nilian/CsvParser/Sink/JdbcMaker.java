@@ -6,6 +6,7 @@ import nilian.CsvParser.data.Field;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.List;
 
@@ -41,6 +42,12 @@ public class JdbcMaker {
             case Double:
                 preparedStatement.setNull(position, Types.DOUBLE);
                 break;
+            case Timestamp:
+                preparedStatement.setNull(position, Types.TIMESTAMP);
+                break;
+            case Boolean:
+                preparedStatement.setNull(position, Types.BOOLEAN);
+                break;
             // Add other types as needed
         }
     }
@@ -58,6 +65,12 @@ public class JdbcMaker {
                 break;
             case Double:
                 preparedStatement.setDouble(position, (double) field.getParsedData());
+                break;
+            case Timestamp:
+                preparedStatement.setTimestamp(position, (Timestamp) field.getParsedData());
+                break;
+            case Boolean:
+                preparedStatement.setBoolean(position, (Boolean) field.getParsedData());
                 break;
             // Add other types as needed
         }
