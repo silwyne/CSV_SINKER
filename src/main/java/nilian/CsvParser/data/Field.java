@@ -60,8 +60,9 @@ public class Field {
                 }
                 return Boolean.valueOf(data);
             }
-
         }
+        // if none
+        return null;
     }
 
 
