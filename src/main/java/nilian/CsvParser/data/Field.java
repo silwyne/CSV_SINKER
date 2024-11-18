@@ -1,8 +1,11 @@
 package nilian.CsvParser.data;
 
 import nilian.CsvParser.Tuple.JavaType;
+import nilian.Main;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Field {
     private final JavaType javaType;
@@ -51,7 +54,7 @@ public class Field {
                 if(data.isEmpty()) {
                     return null;
                 }
-                return Timestamp.valueOf(data);
+                return Timestamp.valueOf(LocalDateTime.parse(data, DateTimeFormatter.ofPattern(Main.TIMESTAMP_PATTERN)));
             }
 
             case Boolean: {

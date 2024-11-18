@@ -26,7 +26,7 @@ public class Main {
     private static final Logger LOGGER = MyLogManager.getLogger("Main");
     private static TupleSchema csvColumnTypes;
     private static int writtenRows = 0 ;
-
+    public static String TIMESTAMP_PATTERN;
     public static void main(String[] args) throws SQLException {
 
         /*
@@ -41,6 +41,7 @@ public class Main {
         String POSTGRES_USER = initialProps.getProperty("POSTGRES_USER");
         String POSTGRES_PASS = initialProps.getProperty("POSTGRES_PASS");
         String TABLE_COLUMNS = initialProps.getProperty("TABLE_COLUMNS");
+        TIMESTAMP_PATTERN = initialProps.getProperty("TIMESTAMP_PATTERN");
 
 
         /*
@@ -55,12 +56,13 @@ public class Main {
         LOGGER.info("POSTGRES_USER     "+POSTGRES_USER);
         LOGGER.info("POSTGRES_PASS     "+POSTGRES_PASS);
         LOGGER.info("TABLE_COLUMNS     "+TABLE_COLUMNS);
+        LOGGER.info("TIMESTAMP_PATTERN "+TIMESTAMP_PATTERN);
 
         /*
         Getting tuple Types from what user said it is
          */
         csvColumnTypes = TupleSchema.parseTuple(CSV_TYPES);
-        LOGGER.fine("YOUR CSV DATA TYPES : "+csvColumnTypes);
+        LOGGER.fine("YOUR CSV DATA TYPES WITH "+csvColumnTypes.getJavaTypes().size()+" COLS : "+csvColumnTypes);
 
         /*
         Reading Csv File
@@ -85,7 +87,6 @@ public class Main {
                 parsedCsv.add(new CsvRow(csvColumnTypes, stringFields));
             } else {
                 badCsv.add(rawString);
-                LOGGER.warning("CSV ROW WITH COMMA IN FIELDS "+rawString);
             }
         }
 
@@ -114,12 +115,13 @@ public class Main {
         }
         LOGGER.finest("Done!");
         LOGGER.finest(writtenRows+" sinked into Table");
+        LOGGER.warning(badCsv.size()+" bad csv rows");
 
         if(!badCsv.isEmpty()) {
             LOGGER.warning("You have some csv lines didn't sinked into Postgres table!");
             LOGGER.warning("Here they are");
             for(String badLine: badCsv) {
-                LOGGER.warning(badLine);
+                System.out.println(badLine);
             }
         }
     }
