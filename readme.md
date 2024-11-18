@@ -8,6 +8,13 @@ A powerful tool to effortlessly transfer CSV data into database tables.
 - **Usability**: Ready for Use
 - **Language**: Java (JDK 11)
 - **Supported Databases**: PostgreSQL (more coming soon!)
+- **Supported DataTypes**:
+  - String
+  - Integer
+  - Long
+  - Double
+  - Boolean
+  - Timestamp
 
 ## Features
 
@@ -33,7 +40,8 @@ Imagine you have a CSV file and need its data in your database table. Manually c
 
 1. **Configure the Environment**:
    Create an `env.csv_sinker` file in your working directory with the following structure:
-2. **Run the script**:
+2. **Download Jar file** from Latest-version of this repo
+3. **Run the script**:
    run the script using this command: \
 ```shell
 java -jar /path/to/CSV_SINKER.jar
