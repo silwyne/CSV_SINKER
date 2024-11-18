@@ -2,6 +2,8 @@ package nilian.CsvParser.data;
 
 import nilian.CsvParser.Tuple.JavaType;
 
+import java.sql.Timestamp;
+
 public class Field {
     private final JavaType javaType;
     private final String data;
@@ -20,37 +22,46 @@ public class Field {
     }
 
     public Object getParsedData(){
-        // if string
-        if(javaType.equals(JavaType.String)) {
-            return data;
-        }
+        switch (javaType) {
 
-        // if integer
-        if(javaType.equals(JavaType.Integer)) {
-            if(data.isEmpty()) {
-                return null;
+            case String: return data;
+
+            case Integer: {
+                if(data.isEmpty()) {
+                    return null;
+                }
+                return Integer.parseInt(data);
             }
-            return Integer.parseInt(data);
-        }
 
-        // if double
-        if(javaType.equals(JavaType.Double)) {
-            if(data.isEmpty()) {
-                return null;
+            case Double: {
+                if(data.isEmpty()) {
+                    return null;
+                }
+                return Double.parseDouble(data);
             }
-            return Double.parseDouble(data);
-        }
 
-        // if long
-        if(javaType.equals(JavaType.Long)) {
-            if(data.isEmpty()) {
-                return null;
+            case Long: {
+                if(data.isEmpty()) {
+                    return null;
+                }
+                return Long.parseLong(data);
             }
-            return Long.parseLong(data);
-        }
 
-        // else null
-        return null;
+            case Timestamp: {
+                if(data.isEmpty()) {
+                    return null;
+                }
+                return Timestamp.valueOf(data);
+            }
+
+            case Boolean: {
+                if(data.isEmpty()) {
+                    return null;
+                }
+                return Boolean.valueOf(data);
+            }
+
+        }
     }
 
 
