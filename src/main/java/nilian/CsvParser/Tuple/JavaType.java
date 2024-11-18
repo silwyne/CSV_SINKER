@@ -6,5 +6,6 @@ public enum JavaType {
     Double,
     Long,
     Timestamp,
-    Boolean;
+    Boolean,
+    INET;
 }
