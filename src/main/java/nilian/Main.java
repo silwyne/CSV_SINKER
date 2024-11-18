@@ -107,7 +107,6 @@ public class Main {
         LOGGER.info("SINKING OK CSV ROWS IN POSTGRES ...");
         for(CsvRow csvRow: parsedCsv) {
             sinker.sinkData(csvRow);
-            writtenRows ++ ;
         }
         LOGGER.finest("Done!");
 
