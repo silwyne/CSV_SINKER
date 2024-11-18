@@ -52,6 +52,9 @@ public class JdbcMaker {
             case Boolean:
                 preparedStatement.setNull(position, Types.BOOLEAN);
                 break;
+            case INET:
+                preparedStatement.setNull(position, Types.OTHER);
+                break;
             // Add other types as needed
         }
     }
@@ -75,6 +78,9 @@ public class JdbcMaker {
                 break;
             case Boolean:
                 preparedStatement.setBoolean(position, (Boolean) field.getParsedData());
+                break;
+            case INET:
+                preparedStatement.setObject(position, field.getParsedData(), Types.OTHER);
                 break;
             // Add other types as needed
         }
