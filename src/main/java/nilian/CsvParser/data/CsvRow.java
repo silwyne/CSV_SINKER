@@ -9,13 +9,13 @@ public class CsvRow {
 
     private final List<Field> csvFields;
 
-    public CsvRow(TupleSchema tupleSchema, String[] rawString) {
+    public CsvRow(TupleSchema tupleSchema, List<String> rawString) {
         // get fields
         csvFields = new ArrayList<>();
         int tupleSchemaSize = tupleSchema.getJavaTypes().size();
         for(int i = 0 ; i < tupleSchemaSize; i++) {
-            if(rawString.length > i) {
-                csvFields.add(new Field(rawString[i], tupleSchema.getJavaTypes().get(i)));
+            if(rawString.size() > i) {
+                csvFields.add(new Field(rawString.get(i), tupleSchema.getJavaTypes().get(i)));
             } else {
                 csvFields.add(new Field(null, tupleSchema.getJavaTypes().get(i)));
             }
