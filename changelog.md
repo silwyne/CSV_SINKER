@@ -21,6 +21,10 @@ All notable changes to this project will be documented in this file.
 ### Security
 - Security improvements or vulnerabilities fixed.
 
+## [1.1.2] - 2024-11-18
+### Fixed
+- Csv Parsing now can parse CSv Lines even if they have comma in their String field
+
 ---
 
 ## [1.1.1] - 2024-11-18
