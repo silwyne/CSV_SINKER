@@ -15,6 +15,7 @@ A powerful tool to effortlessly transfer CSV data into database tables.
   - Double
   - Boolean
   - Timestamp
+  - INET
 
 ## Features
 
