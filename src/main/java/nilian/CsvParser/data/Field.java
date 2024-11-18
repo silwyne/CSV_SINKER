@@ -1,6 +1,6 @@
 package nilian.CsvParser.data;
 
-import nilian.CsvParser.Tuple.JavaType;
+import nilian.CsvParser.Tuple.DataType;
 import nilian.Main;
 
 import java.sql.Timestamp;
@@ -8,16 +8,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Field {
-    private final JavaType javaType;
+    private final DataType dataType;
     private final String data;
 
-    public Field(String data, JavaType javaType) {
+    public Field(String data, DataType dataType) {
         this.data = data;
-        this.javaType = javaType;
+        this.dataType = dataType;
     }
 
-    public JavaType getJavaType() {
-        return javaType;
+    public DataType getJavaType() {
+        return dataType;
     }
 
     public String getData() {
@@ -25,7 +25,7 @@ public class Field {
     }
 
     public Object getParsedData(){
-        switch (javaType) {
+        switch (dataType) {
 
             case String: return data;
 

@@ -1,6 +1,6 @@
 package nilian.CsvParser.Sink;
 
-import nilian.CsvParser.Tuple.JavaType;
+import nilian.CsvParser.Tuple.DataType;
 import nilian.CsvParser.data.CsvRow;
 import nilian.CsvParser.data.Field;
 
@@ -32,7 +32,7 @@ public class JdbcMaker {
         };
     }
 
-    private static void setNullValue(PreparedStatement preparedStatement, int position, JavaType type) throws SQLException {
+    private static void setNullValue(PreparedStatement preparedStatement, int position, DataType type) throws SQLException {
         switch (type) {
             case String:
                 preparedStatement.setNull(position, Types.VARCHAR);

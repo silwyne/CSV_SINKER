@@ -1,6 +1,6 @@
 package nilian.CsvParser.Tuple;
 
-public enum JavaType {
+public enum DataType {
     String,
     Integer,
     Double,
