@@ -21,6 +21,13 @@ All notable changes to this project will be documented in this file.
 ### Security
 - Security improvements or vulnerabilities fixed.
 
+
+---
+
+## [1.1.0] - 2024-11-18
+### Added
+- new DataTypes (Timestamp & Boolean)
+
 ---
 
 ## [1.0.0] - 2024-11-17
