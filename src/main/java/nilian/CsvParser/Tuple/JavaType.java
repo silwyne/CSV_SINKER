@@ -4,5 +4,7 @@ public enum JavaType {
     String,
     Integer,
     Double,
-    Long;
+    Long,
+    Timestamp,
+    Boolean;
 }
