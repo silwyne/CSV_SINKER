@@ -27,7 +27,10 @@ public class Field {
     public Object getParsedData(){
         switch (dataType) {
 
-            case String: return data;
+            case INET:
+
+            case String:
+                return data;
 
             case Integer: {
                 if(data.isEmpty()) {
