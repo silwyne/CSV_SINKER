@@ -19,8 +19,12 @@ public class JdbcMaker {
                 Field field = fields.get(i);
                 int position = i + 1;
 
-                if (field.getData().isEmpty()) {
-                    setNullValue(preparedStatement, position, field.getJavaType());
+                if (field.getData() != null) {
+                    if(field.getData().isEmpty()) {
+                        setNullValue(preparedStatement, position, field.getJavaType());
+                    } else {
+                        setNonNullValue(preparedStatement, position, field);
+                    }
                 } else {
                     setNonNullValue(preparedStatement, position, field);
                 }

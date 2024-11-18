@@ -14,7 +14,11 @@ public class CsvRow {
         csvFields = new ArrayList<>();
         int tupleSchemaSize = tupleSchema.getJavaTypes().size();
         for(int i = 0 ; i < tupleSchemaSize; i++) {
-            csvFields.add(new Field(rawString[i], tupleSchema.getJavaTypes().get(i)));
+            if(rawString.length > i) {
+                csvFields.add(new Field(rawString[i], tupleSchema.getJavaTypes().get(i)));
+            } else {
+                csvFields.add(new Field(null, tupleSchema.getJavaTypes().get(i)));
+            }
         }
     }
 
