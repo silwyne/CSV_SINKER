@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.1.3] - 2024-11-18
 ### Added
+- Added INET DataType which get used for IP Addresses
 ### Fixed
 - Doesn't throw error if there are more fields as you said
 
