@@ -20,7 +20,7 @@ public class Parser {
          */
         for(int i = 0; i < input.size(); i++) {
             List<String> csvFields = parseCsvLine(input.get(i));
-            if(csvFields.size() == expectedColumns) {
+            if(csvFields.size() >= expectedColumns) {
                 parsedCsv.add(new CsvRow(Main.csvColumnTypes, csvFields));
             } else {
                 badCsv.add(input.get(i));
